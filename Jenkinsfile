@@ -13,8 +13,17 @@ pipeline {
             }
         }
 
+        stage('Copy secret.tfvars') {
+            steps {
+                sh 'cp ~/aws-terraform/secret.tfvars $WORKSPACE/'
+                sh 'chown jenkins:jenkins $WORKSPACE/secret.tfvars'
+                sh 'chmod 600 $WORKSPACE/secret.tfvars'
+            }
+        }
+
         stage('Initialize Terraform') {
             steps {
+                sh 'ls -l $WORKSPACE/'  // Verify the file exists
                 sh 'terraform init'
             }
         }
