@@ -27,7 +27,7 @@ pipeline {
 
         stage('Plan Terraform') {
             steps {
-                sh 'terraform plan'
+                sh 'terraform plan -var-file=secret.tfvars'
             }
         }
 
@@ -36,7 +36,7 @@ pipeline {
                 branch 'master' // Only run this stage for the master branch
             }
             steps {
-                sh 'terraform apply -auto-approve'
+                sh 'terraform apply -var-file=secret.tfvars -auto-approve'
             }
         }
     }
